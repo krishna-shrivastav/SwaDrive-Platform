@@ -351,17 +351,72 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
 .confetti{position:absolute;pointer-events:none}
 
 /* responsive */
-@media(max-width:900px){
-  .hero-content{grid-template-columns:1fr;gap:50px;padding-top:40px}
-  .hero-phone{display:none}
-  .problem-grid{grid-template-columns:1fr}
-  .step-row{grid-template-columns:56px 1fr;gap:20px}
-  .step-visual{display:none}
-  .bids-showcase{grid-template-columns:1fr}
-  .services-grid{grid-template-columns:1fr 1fr}
-  .testimonials-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
-  .demo-container{grid-template-columns:1fr}
+@media (max-width: 600px){
+
+  #hero{
+    padding: 100px 20px 40px; /* proper spacing */
+    min-height: auto;
+  }
+
+  .hero-content{
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .hero-left{
+    text-align: left;
+  }
+
+  .hero-title{
+    font-size: 34px;   /* FIX: text too big tha */
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-sub{
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .hero-btns{
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-primary,
+  .btn-secondary{
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .hero-stats{
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+
+  .stat-num{
+    font-size: 24px;
+  }
+
+  /* PHONE MOCKUP FIX */
+  .hero-phone{
+    display: flex !important; /* mobile me bhi dikhana hai */
+    justify-content: center;
+  }
+
+  .phone-frame{
+    width: 220px;
+    transform: none; /* FIX: tilt hataya */
+  }
+
+  .phone-screen{
+    height: 420px;
+  }
+
 }
 </style>
 </head>
