@@ -350,71 +350,49 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
 /* Confetti dots */
 .confetti{position:absolute;pointer-events:none}
 
-/* responsive */
-@media (max-width: 600px){
+@media (max-width: 768px){
 
   #hero{
-    padding: 100px 20px 40px; /* proper spacing */
-    min-height: auto;
+    padding: 90px 20px 40px;
   }
 
   .hero-content{
     grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .hero-left{
-    text-align: left;
+    gap: 40px;
   }
 
   .hero-title{
-    font-size: 34px;   /* FIX: text too big tha */
-    line-height: 1.2;
-    letter-spacing: -0.5px;
+    font-size: 38px; /* balanced */
+    line-height: 1.15;
   }
 
   .hero-sub{
-    font-size: 15px;
-    margin-bottom: 24px;
+    font-size: 16px;
   }
 
   .hero-btns{
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .btn-primary,
   .btn-secondary{
-    width: 100%;
-    justify-content: center;
-    padding: 12px;
+    padding: 12px 20px;
     font-size: 14px;
   }
 
-  .hero-stats{
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 30px;
-    padding-top: 20px;
-  }
-
-  .stat-num{
-    font-size: 24px;
-  }
-
-  /* PHONE MOCKUP FIX */
+  /* PHONE FIX — IMPORTANT */
   .hero-phone{
-    display: flex !important; /* mobile me bhi dikhana hai */
+    display: flex;
     justify-content: center;
   }
 
   .phone-frame{
-    width: 220px;
-    transform: none; /* FIX: tilt hataya */
+    width: 240px;
+    transform: none; /* ye sabse important fix hai */
   }
 
   .phone-screen{
-    height: 420px;
+    height: 500px;
   }
 
 }
