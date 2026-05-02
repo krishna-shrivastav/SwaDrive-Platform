@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Careers - SwaDrive</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 60px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #0f766e;
+    font-size: 40px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #555;
+    max-width: 700px;
+    margin: 10px auto 30px;
+    line-height: 1.6;
+  }
+
+  .highlight {
+    text-align: center;
+    background: #ecfeff;
+    border: 1px solid #67e8f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 50px;
+    color: #0c4a6e;
+  }
+
+  .jobs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .job-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+  }
+
+  .job-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .job-card h3 {
+    margin: 0;
+    color: #1e293b;
+  }
+
+  .job-card p {
+    color: #555;
+    margin: 10px 0;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .btn {
+    margin-top: 10px;
+    display: inline-block;
+    background: #0d9488;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    background: #0f766e;
+  }
+
+  .apply-section {
+    margin-top: 60px;
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  }
+
+    .app-navbar{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bg3);display:flex;justify-content:space-around;padding:10px 0 16px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.nav-item-icon{font-size:20px}
+.nav-item-label{font-size:10px;color:var(--ink3)}
+.nav-item.active .nav-item-label{color:var(--blue);font-weight:600}
+
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5vw;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(189, 211, 207, 0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,240,0.8);transition:all 0.3s}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--ink);text-decoration:none}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:10px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:20px;height:20px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 22px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+
+</style>
+</head>
+
+<body>
+<nav>
+  <a href="https://swadrive.in/" class="nav-logo">
+  <div class="logo-icon">
+      <img src="https://media.licdn.com/dms/image/v2/D560BAQE_RJfNmGKd1g/company-logo_200_200/B56Z2UZM.pKgAI-/0/1776311131797?e=1779321600&v=beta&t=72Ci5Xa2cluWxJFJ2je7iW08rnkHvVtawF9BzMK6VYs" 
+           alt="SwaDrive Logo" 
+           style="width:40px; height:40px; border-radius:50%;">
+    </div>
+    SwaDrive
+  </a>
+  <div class="nav-links">
+    <a href="index.html">How it Works</a>
+    <a href="index.html#bids">Bidding</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#live-demo">Live Demo</a>
+  </div>
+  <a href="index.html#live-demo" class="nav-cta">Try Demo</a>
+</nav>
+<div class="container">
+
+  <h1>Join Our Team 🚀</h1>
+
+  <p class="subtitle">
+    At SwaDrive, we are building a platform that simplifies everyday services. 
+    Join us to create real impact and solve real-world problems.
+  </p>
+
+  <!-- NEW ARYCODES SECTION -->
+  <div class="highlight">
+    <h2>🚀 Learn & Grow with Arycodes</h2>
+    <p>
+      SwaDrive has teamed up with <strong>Arycodes</strong> to help you grow your skills.
+      Selected candidates will get access to structured learning programs where you can 
+      learn development, real-world project building, and industry skills directly on the Arycodes platform.
+    </p>
+    <p>
+      Whether you're a beginner or experienced, we ensure you don't just work — you also grow.
+    </p>
+  </div>
+
+  <!-- JOB LIST -->
+  <div class="jobs">
+
+    <div class="job-card">
+      <h3>Frontend Developer</h3>
+      <p>Build modern UI for our platform</p>
+      <span class="tag">Remote</span>
+      <span class="tag">Full-Time</span>
+      <br>
+      <a href="https://arycodes.com" class="btn">Apply Now</a>
+    </div>
+
+    <div class="job-card">
+      <h3>Backend Developer</h3>
+      <p>Develop APIs and system logic</p>
+      <span class="tag">Remote</span>
+      <span class="tag">Full-Time</span>
+      <br>
+      <a href="https://arycodes.com" class="btn">Apply Now</a>
+    </div>
+
+    <div class="job-card">
+      <h3>Operations Manager</h3>
+      <p>Manage service providers & operations</p>
+      <span class="tag">On-site</span>
+      <span class="tag">Full-Time</span>
+      <br>
+      <a href="https://arycodes.com" class="btn">Apply Now</a>
+    </div>
+
+    <div class="job-card">
+      <h3>Marketing Intern</h3>
+      <p>Help grow SwaDrive reach</p>
+      <span class="tag">Internship</span>
+      <span class="tag">Remote</span>
+      <br>
+      <a href="https://arycodes.com" class="btn">Apply Now</a>
+    </div>
+
+  </div>
+
+  <!-- APPLY -->
+  <div class="apply-section">
+    <h2>Didn't find a role?</h2>
+    <p>Send your resume and we’ll get back to you.</p>
+    <a href="mailto:swadrive.in@gmail.com" class="btn">Send Resume</a>
+  </div>
+
+</div>
+
+</body>
+</html>
