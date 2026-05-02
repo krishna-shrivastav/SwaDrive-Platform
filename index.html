@@ -350,52 +350,19 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
 /* Confetti dots */
 .confetti{position:absolute;pointer-events:none}
 
-@media (max-width: 768px){
-
-  #hero{
-    padding: 90px 20px 40px;
-  }
-
-  .hero-content{
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .hero-title{
-    font-size: 38px; /* balanced */
-    line-height: 1.15;
-  }
-
-  .hero-sub{
-    font-size: 16px;
-  }
-
-  .hero-btns{
-    flex-wrap: wrap;
-  }
-
-  .btn-primary,
-  .btn-secondary{
-    padding: 12px 20px;
-    font-size: 14px;
-  }
-
-  /* PHONE FIX — IMPORTANT */
-  .hero-phone{
-    display: flex;
-    justify-content: center;
-  }
-
-  .phone-frame{
-    width: 240px;
-    transform: none; /* ye sabse important fix hai */
-  }
-
-  .phone-screen{
-    height: 500px;
-  }
-
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:50px;padding-top:40px}
+  .hero-phone{display:none}
+  .problem-grid{grid-template-columns:1fr}
+  .step-row{grid-template-columns:56px 1fr;gap:20px}
+  .step-visual{display:none}
+  .bids-showcase{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .demo-container{grid-template-columns:1fr}
 }
+  
 </style>
 </head>
 <body>
