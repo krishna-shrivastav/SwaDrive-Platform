@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwaDrive – On-Demand Emergency Assistance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#2563EB;--blue-dark:#1d4ed8;--blue-light:#EFF6FF;--blue-glow:rgba(37,99,235,0.15);
+  --green:#22C55E;--green-dark:#16a34a;--green-light:#F0FDF4;
+  --red:#EF4444;--amber:#F59E0B;
+  --bg:#F8FAFC;--bg2:#F1F5F9;--bg3:#E2E8F0;
+  --ink:#0F172A;--ink2:#334155;--ink3:#64748B;--ink4:#94A3B8;
+  --white:#ffffff;--card:#ffffff;
+  --r:16px;--r2:12px;--r3:24px;
+  --sh:0 2px 16px rgba(15,23,42,0.08);
+  --sh2:0 8px 40px rgba(15,23,42,0.14);
+  --font-head:'Syne',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5vw;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(248,250,252,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,240,0.8);transition:all 0.3s}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--ink);text-decoration:none}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:10px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:20px;height:20px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 22px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:80px 5vw 0}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#0F172A 0%,#1e3a6e 45%,#0a2a1a 100%);z-index:0}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.06) 1px,transparent 1px);background-size:50px 50px;z-index:1}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,0.2) 0%,transparent 70%);z-index:1;animation:pulse-glow 4s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-left{color:#fff}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.2);border:1px solid rgba(37,99,235,0.4);color:#93c5fd;padding:7px 16px;border-radius:50px;font-size:13px;font-weight:500;margin-bottom:28px}
+.badge-dot{width:7px;height:7px;background:#22C55E;border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-title{font-family:var(--font-head);font-size:clamp(40px,5vw,64px);font-weight:800;line-height:1.08;margin-bottom:22px;letter-spacing:-1.5px}
+.hero-title span{background:linear-gradient(135deg,#60a5fa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:18px;color:#94a3b8;line-height:1.65;margin-bottom:36px;font-weight:300}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:600;text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s;box-shadow:0 4px 20px rgba(37,99,235,0.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,99,235,0.45)}
+.btn-secondary{background:rgba(255,255,255,0.08);color:#fff;padding:14px 28px;border-radius:50px;font-size:15px;font-weight:500;border:1px solid rgba(255,255,255,0.2);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s}
+.btn-secondary:hover{background:rgba(255,255,255,0.14)}
+.hero-stats{display:flex;gap:40px;margin-top:48px;padding-top:36px;border-top:1px solid rgba(255,255,255,0.08)}
+.stat{text-align:left}
+.stat-num{font-family:var(--font-head);font-size:32px;font-weight:800;color:#fff;line-height:1}
+.stat-label{font-size:13px;color:#64748b;margin-top:4px}
+
+/* PHONE MOCKUP */
+.hero-phone{position:relative;display:flex;justify-content:center}
+.phone-frame{width:300px;background:#0a0a0a;border-radius:46px;padding:12px;box-shadow:0 40px 100px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(255,255,255,0.08);position:relative;transform:perspective(1000px) rotateY(-10deg) rotateX(3deg);transition:transform 0.5s ease}
+.phone-frame:hover{transform:perspective(1000px) rotateY(-5deg) rotateX(1deg)}
+.phone-screen{background:#F8FAFC;border-radius:36px;overflow:hidden;height:580px;position:relative}
+.phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:28px;background:#0a0a0a;border-radius:0 0 20px 20px;z-index:10}
+.phone-statusbar{height:44px;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between;background:#fff}
+.status-time{font-size:14px;font-weight:600;color:#0F172A}
+.status-icons{display:flex;gap:5px;align-items:center;font-size:11px;color:#0F172A}
+
+/* PHONE APP SCREENS */
+.app-screen{position:absolute;inset:0;transition:all 0.5s cubic-bezier(0.4,0,0.2,1);background:#F8FAFC}
+.app-screen.hidden{opacity:0;transform:translateX(100%);pointer-events:none}
+.app-topbar{background:#fff;padding:16px 20px 14px;border-bottom:1px solid #F1F5F9}
+.app-topbar-title{font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--ink)}
+.app-topbar-sub{font-size:12px;color:var(--ink3);margin-top:1px}
+
+/* Screen: Home */
+.app-home-header{background:linear-gradient(135deg,var(--blue),#1d4ed8);padding:20px 20px 40px;color:#fff}
+.app-home-greet{font-size:13px;opacity:0.8;margin-bottom:2px}
+.app-home-name{font-family:var(--font-head);font-size:20px;font-weight:700}
+.app-home-location{display:flex;align-items:center;gap:5px;font-size:12px;opacity:0.75;margin-top:6px}
+.app-search-bar{margin:0 16px;background:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.12);margin-top:-24px;position:relative;z-index:2;font-size:13px;color:var(--ink3)}
+.app-service-section{padding:20px 16px 0}
+.app-section-title{font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:12px;letter-spacing:0.3px}
+.app-service-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.service-card{background:#fff;border-radius:14px;padding:14px;border:2px solid transparent;cursor:pointer;transition:all 0.25s;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.service-card:hover,.service-card.active{border-color:var(--blue);background:#EFF6FF}
+.service-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.service-icon.blue{background:#EFF6FF}
+.service-icon.green{background:#F0FDF4}
+.service-card-title{font-size:13px;font-weight:600;color:var(--ink)}
+.service-card-sub{font-size:11px;color:var(--ink3)}
+.app-quick-section{padding:16px}
+.quick-row{display:flex;gap:8px;overflow-x:auto}
+.quick-chip{background:#fff;border:1px solid var(--bg3);border-radius:50px;padding:7px 14px;font-size:12px;font-weight:500;color:var(--ink2);white-space:nowrap;cursor:pointer;transition:all 0.2s}
+.quick-chip:hover,.quick-chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* Request flow screens */
+.req-screen{padding:16px}
+.req-label{font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.req-input{width:100%;background:#fff;border:2px solid var(--bg3);border-radius:12px;padding:12px 14px;font-size:14px;font-family:var(--font-body);color:var(--ink);outline:none;transition:border-color 0.2s;resize:none}
+.req-input:focus{border-color:var(--blue)}
+.urgency-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.urgency-opt{background:#fff;border:2px solid var(--bg3);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all 0.2s}
+.urgency-opt.selected{border-color:var(--red);background:#FEF2F2}
+.urgency-opt.em{border-color:var(--red)}
+.urgency-left{display:flex;align-items:center;gap:10px}
+.urgency-dot{width:10px;height:10px;border-radius:50%}
+.urgency-dot.normal{background:#22C55E}
+.urgency-dot.urgent{background:var(--amber)}
+.urgency-dot.emergency{background:var(--red);animation:blink 1s infinite}
+.urgency-title{font-size:13px;font-weight:600;color:var(--ink)}
+.urgency-sub{font-size:11px;color:var(--ink3)}
+.urgency-badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:50px;background:#FEE2E2;color:var(--red)}
+
+/* Bids screen */
+.bid-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;border:2px solid var(--bg3);cursor:pointer;transition:all 0.25s;position:relative}
+.bid-card.best{border-color:var(--green)}
+.bid-card.best::before{content:'BEST VALUE';position:absolute;top:-1px;right:14px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:0 0 8px 8px;letter-spacing:0.5px}
+.bid-card:hover{border-color:var(--blue);transform:translateY(-1px);box-shadow:var(--sh)}
+.bid-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bid-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+.bid-name{font-size:13px;font-weight:600;color:var(--ink)}
+.bid-rating{font-size:12px;color:var(--ink3);display:flex;align-items:center;gap:3px}
+.bid-star{color:#F59E0B;font-size:12px}
+.bid-details{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.bid-detail{text-align:center;background:var(--bg);border-radius:8px;padding:8px 4px}
+.bid-detail-val{font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--ink)}
+.bid-detail-key{font-size:10px;color:var(--ink3);margin-top:2px}
+.btn-accept{width:100%;background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.25s;margin-top:12px;font-family:var(--font-body)}
+.btn-accept:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,0.35)}
+.btn-accept:active{transform:scale(0.98)}
+
+/* Status screen */
+.status-map{height:140px;background:linear-gradient(135deg,#e8f4f8,#d1e8ff);border-radius:14px;position:relative;overflow:hidden;margin-bottom:14px}
+.status-map-bg{position:absolute;inset:0;opacity:0.3}
+.map-road{stroke:#94a3b8;stroke-width:4;fill:none;stroke-linecap:round}
+.map-car{position:absolute;font-size:22px;animation:drive 3s linear infinite}
+@keyframes drive{0%{left:20%;top:60%}50%{left:50%;top:40%}100%{left:75%;top:55%}}
+.map-pin{position:absolute;right:18%;top:30%;font-size:24px}
+.status-steps{display:flex;flex-direction:column;gap:0}
+.status-step{display:flex;gap:12px;padding:10px 0;position:relative}
+.status-step:not(:last-child)::after{content:'';position:absolute;left:15px;top:36px;width:2px;height:calc(100% - 10px);background:var(--bg3)}
+.status-step.done::after{background:var(--green)}
+.step-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg3);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;z-index:1}
+.status-step.done .step-dot{background:var(--green);border-color:var(--green)}
+.status-step.active .step-dot{background:var(--blue);border-color:var(--blue);animation:pulse-ring 1.5s ease infinite}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(37,99,235,0.4)}70%{box-shadow:0 0 0 8px rgba(37,99,235,0)}100%{box-shadow:0 0 0 0 rgba(37,99,235,0)}}
+.step-info{padding-top:6px}
+.step-title{font-size:13px;font-weight:600;color:var(--ink)}
+.step-time{font-size:11px;color:var(--ink3)}
+
+/* Completion */
+.completion-screen{display:flex;flex-direction:column;align-items:center;padding:20px 16px;text-align:center}
+.completion-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--green),#16a34a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:16px;animation:pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes pop-in{0%{opacity:0;transform:scale(0.5)}100%{opacity:1;transform:scale(1)}}
+.completion-title{font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.completion-sub{font-size:13px;color:var(--ink3);margin-bottom:20px}
+.receipt-card{background:#fff;border-radius:14px;padding:16px;width:100%;text-align:left;border:1px solid var(--bg3)}
+.receipt-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px}
+.receipt-row.total{border-top:1px solid var(--bg3);margin-top:4px;padding-top:12px;font-weight:600;font-size:14px}
+.receipt-key{color:var(--ink3)}
+.receipt-val{color:var(--ink);font-weight:500}
+.stars{display:flex;gap:6px;justify-content:center;margin:16px 0}
+.star{font-size:28px;cursor:pointer;transition:transform 0.15s}
+.star:hover{transform:scale(1.2)}
+
+/* APP NAV BAR */
+.app-navbar{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bg3);display:flex;justify-content:space-around;padding:10px 0 16px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.nav-item-icon{font-size:20px}
+.nav-item-label{font-size:10px;color:var(--ink3)}
+.nav-item.active .nav-item-label{color:var(--blue);font-weight:600}
+
+/* SECTION COMMON */
+section{padding:100px 5vw}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-badge{display:inline-flex;align-items:center;gap:6px;background:var(--blue-light);color:var(--blue);padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;letter-spacing:0.3px;text-transform:uppercase;margin-bottom:16px}
+.section-title{font-family:var(--font-head);font-size:clamp(32px,4vw,48px);font-weight:800;color:var(--ink);line-height:1.15;letter-spacing:-1px;margin-bottom:14px}
+.section-sub{font-size:18px;color:var(--ink3);max-width:560px;line-height:1.65;font-weight:300}
+
+/* PROBLEM */
+#problem{background:#0F172A;padding:100px 5vw;position:relative;overflow:hidden}
+#problem .section-title{color:#fff}
+#problem .section-sub{color:#64748b}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.problem-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r);padding:28px;position:relative;overflow:hidden}
+.problem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+.problem-emoji{font-size:32px;margin-bottom:16px}
+.problem-title{font-family:var(--font-head);font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.problem-desc{font-size:14px;color:#64748b;line-height:1.65}
+.scenario-bar{margin-top:56px;display:flex;align-items:center;gap:20px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);border-radius:var(--r);padding:20px 24px}
+.scenario-emoji{font-size:36px;flex-shrink:0}
+.scenario-text h4{font-size:16px;font-weight:600;color:#fca5a5}
+.scenario-text p{font-size:14px;color:#64748b;margin-top:4px}
+.call-animation{display:flex;gap:8px;margin-top:12px;align-items:center}
+.call-bubble{background:rgba(255,255,255,0.06);border-radius:50px;padding:6px 14px;font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:6px}
+.call-icon{width:18px;height:18px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+
+/* HOW IT WORKS */
+#how{background:var(--bg)}
+.steps-container{display:flex;flex-direction:column;gap:0;margin-top:60px;position:relative}
+.steps-container::before{content:'';position:absolute;left:27px;top:20px;bottom:20px;width:2px;background:linear-gradient(180deg,var(--blue),var(--green));border-radius:2px}
+.step-row{display:grid;grid-template-columns:56px 1fr 1fr;gap:40px;align-items:center;padding:40px 0;border-bottom:1px solid var(--bg3)}
+.step-row:last-child{border-bottom:none}
+.step-num{width:56px;height:56px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:20px;font-weight:800;color:#fff;flex-shrink:0;position:relative;z-index:1;box-shadow:0 0 0 6px var(--bg)}
+.step-content h3{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.step-content p{font-size:15px;color:var(--ink3);line-height:1.65}
+.step-visual{background:#fff;border-radius:var(--r);padding:20px;box-shadow:var(--sh);min-height:100px;display:flex;align-items:center;justify-content:center}
+
+/* Broadcast visual */
+.broadcast-viz{position:relative;width:160px;height:120px;flex-shrink:0}
+.broadcast-center{width:44px;height:44px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2}
+.ring{position:absolute;border:2px solid var(--blue);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0}
+.ring1{width:70px;height:70px;animation:ring-out 2.5s ease-out 0s infinite}
+.ring2{width:100px;height:100px;animation:ring-out 2.5s ease-out 0.6s infinite}
+.ring3{width:140px;height:140px;animation:ring-out 2.5s ease-out 1.2s infinite}
+@keyframes ring-out{0%{opacity:0.8;transform:translate(-50%,-50%) scale(0.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
+.helper-dot{position:absolute;width:30px;height:30px;background:#fff;border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.helper-dot.active{background:var(--green-light);animation:helper-pop 0.5s ease forwards}
+@keyframes helper-pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.hd1{top:5px;left:5px}
+.hd2{top:5px;right:5px}
+.hd3{bottom:5px;left:5px}
+.hd4{bottom:5px;right:5px}
+
+/* BIDDING SHOWCASE */
+#bids{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%)}
+.bids-showcase{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:center;margin-top:56px}
+.bids-left .section-title{margin-bottom:16px}
+.feature-list{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+.feature-item{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;background:#fff;border-radius:var(--r2);border:1px solid var(--bg3)}
+.feature-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.feature-icon.blue{background:var(--blue-light)}
+.feature-icon.green{background:var(--green-light)}
+.feature-icon.amber{background:#FFFBEB}
+.feature-text h4{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.feature-text p{font-size:13px;color:var(--ink3)}
+.bids-phone{background:#0F172A;border-radius:30px;padding:20px;box-shadow:var(--sh2)}
+.bids-screen{background:#F8FAFC;border-radius:20px;padding:16px;overflow:hidden}
+.bids-header{font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.bids-sub{font-size:12px;color:var(--ink3);margin-bottom:14px}
+.bid-showcase-card{background:#fff;border:2px solid var(--bg3);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all 0.3s;position:relative}
+.bid-showcase-card:hover{border-color:var(--blue);transform:translateX(4px)}
+.bid-showcase-card.selected{border-color:var(--green);background:var(--green-light)}
+.bsc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.bsc-name{font-size:13px;font-weight:600;color:var(--ink)}
+.bsc-price{font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--blue)}
+.bsc-price.best-price{color:var(--green)}
+.bsc-meta{display:flex;gap:16px}
+.bsc-meta-item{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ink3)}
+.bids-accept-btn{width:100%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:all 0.25s;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.bids-accept-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(34,197,94,0.35)}
+.bids-accept-btn:active{transform:scale(0.98)}
+
+/* SERVICES */
+#services{background:var(--bg)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.svc-card{background:#fff;border-radius:var(--r);padding:28px;border:1px solid var(--bg3);transition:all 0.25s;cursor:pointer;position:relative;overflow:hidden}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--green));transform:scaleX(0);transition:transform 0.3s}
+.svc-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-icon-wrap{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:18px}
+.svc-icon-wrap.blue{background:var(--blue-light)}
+.svc-icon-wrap.green{background:var(--green-light)}
+.svc-icon-wrap.amber{background:#FFFBEB}
+.svc-icon-wrap.purple{background:#F5F3FF}
+.svc-icon-wrap.red{background:#FEF2F2}
+.svc-icon-wrap.teal{background:#F0FDFA}
+.svc-title{font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.svc-desc{font-size:14px;color:var(--ink3);line-height:1.65;margin-bottom:16px}
+.svc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--bg2);color:var(--ink2);font-size:11px;font-weight:500;padding:4px 10px;border-radius:50px}
+
+/* TESTIMONIALS */
+#testimonials{background:#0F172A;padding:100px 5vw}
+#testimonials .section-title{color:#fff}
+#testimonials .section-badge{background:rgba(37,99,235,0.2);color:#93c5fd;border:1px solid rgba(37,99,235,0.3)}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.testi-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r);padding:24px;transition:all 0.25s}
+.testi-card:hover{background:rgba(255,255,255,0.07);transform:translateY(-3px)}
+.testi-stars{color:var(--amber);font-size:14px;margin-bottom:14px;letter-spacing:2px}
+.testi-text{font-size:15px;color:#94a3b8;line-height:1.7;margin-bottom:18px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.testi-name{font-size:13px;font-weight:600;color:#e2e8f0}
+.testi-role{font-size:12px;color:#64748b}
+
+/* CTA SECTION */
+#cta-final{background:linear-gradient(135deg,var(--blue) 0%,#1d4ed8 50%,#1e3a6e 100%);padding:100px 5vw;text-align:center;position:relative;overflow:hidden}
+#cta-final::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+#cta-final .section-title{color:#fff;max-width:600px;margin:0 auto 14px}
+#cta-final .section-sub{color:rgba(255,255,255,0.75);margin:0 auto 40px;max-width:480px}
+.cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--blue);padding:14px 32px;border-radius:50px;font-size:15px;font-weight:700;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s;font-family:var(--font-body)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.2)}
+.btn-outline-white{background:transparent;color:#fff;padding:14px 28px;border-radius:50px;font-size:15px;font-weight:500;border:2px solid rgba(255,255,255,0.4);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s;font-family:var(--font-body)}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1)}
+
+/* FOOTER */
+footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:#64748b;margin-top:12px;line-height:1.65;max-width:260px}
+.footer-col h4{font-size:13px;font-weight:600;color:#e2e8f0;margin-bottom:14px;letter-spacing:0.3px}
+.footer-col a{display:block;color:#64748b;text-decoration:none;margin-bottom:9px;font-size:13px;transition:color 0.2s}
+.footer-col a:hover{color:#93c5fd}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s cubic-bezier(0.4,0,0.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+
+/* LIVE DEMO SECTION */
+#live-demo{background:var(--bg2);padding:100px 5vw}
+.demo-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center}
+.demo-phone-wrap{display:flex;justify-content:center}
+.demo-info{display:flex;flex-direction:column;gap:20px;margin-top:40px}
+.demo-step-btn{background:#fff;border:2px solid var(--bg3);border-radius:14px;padding:16px 20px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;transition:all 0.25s;text-align:left}
+.demo-step-btn:hover{border-color:var(--blue);box-shadow:var(--sh)}
+.demo-step-btn.active{border-color:var(--blue);background:var(--blue-light)}
+.demo-step-num{width:32px;height:32px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink2);flex-shrink:0}
+.demo-step-btn.active .demo-step-num{background:var(--blue);color:#fff}
+.demo-step-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.demo-step-desc{font-size:13px;color:var(--ink3)}
+
+/* Typing animation */
+.typing-text::after{content:'|';animation:blink 0.8s step-end infinite}
+@keyframes type-cursor{0%,100%{opacity:1}50%{opacity:0}}
+
+/* HAZARD BLINK */
+.hazard-light{animation:hazard 1s ease-in-out infinite alternate}
+@keyframes hazard{0%{opacity:0.3}100%{opacity:1}}
+
+/* Progress bar */
+.progress-bar{height:3px;background:var(--bg3);border-radius:3px;overflow:hidden;margin:8px 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:3px;transition:width 0.5s ease}
+
+/* Chat bubbles */
+.chat-area{display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--bg2);border-radius:14px;max-height:120px;overflow-y:auto}
+.chat-msg{max-width:80%;padding:8px 12px;border-radius:12px;font-size:12px;line-height:1.5}
+.chat-msg.out{background:var(--blue);color:#fff;align-self:flex-end;border-radius:12px 12px 2px 12px}
+.chat-msg.in{background:#fff;color:var(--ink);align-self:flex-start;border-radius:12px 12px 12px 2px;border:1px solid var(--bg3)}
+
+/* Confetti dots */
+.confetti{position:absolute;pointer-events:none}
+
+/* responsive */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:50px;padding-top:40px}
+  .hero-phone{display:none}
+  .problem-grid{grid-template-columns:1fr}
+  .step-row{grid-template-columns:56px 1fr;gap:20px}
+  .step-visual{display:none}
+  .bids-showcase{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .demo-container{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://swadrive.in/" class="nav-logo">
+  <div class="logo-icon">
+      <img src="https://media.licdn.com/dms/image/v2/D560BAQE_RJfNmGKd1g/company-logo_200_200/B56Z2UZM.pKgAI-/0/1776311131797?e=1779321600&v=beta&t=72Ci5Xa2cluWxJFJ2je7iW08rnkHvVtawF9BzMK6VYs" 
+           alt="SwaDrive Logo" 
+           style="width:40px; height:40px; border-radius:50%;">
+    </div>
+    SwaDrive
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it Works</a>
+    <a href="#bids">Bidding</a>
+    <a href="#services">Services</a>
+    <a href="#live-demo">Live Demo</a>
+  </div>
+  <a href="#live-demo" class="nav-cta">Try Demo</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Live in Cities &nbsp;·&nbsp; Many Helpers
+      </div>
+      <h1 class="hero-title">Stuck in an<br><span>Emergency?</span><br>Help is just min<br>away.</h1>
+      <p class="hero-sub"><b><b>SwaDrive</b></b> connects you with verified mechanics & technicians via a transparent bidding system. No fixed rates. No guessing. Real-time quotes in minutes.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('live-demo').scrollIntoView({behavior:'smooth'})">
+          ▶ Watch How It Works
+        </button>
+        <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
+          Explore Features →
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num" id="s1">0</div><div class="stat-label">Requests fulfilled</div></div>
+        <div class="stat"><div class="stat-num" id="s2">0</div><div class="stat-label">Avg. response time</div></div>
+        <div class="stat"><div class="stat-num" id="s3">0</div><div class="stat-label">Helpers registered</div></div>
+      </div>
+    </div>
+    <div class="hero-phone">
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <!-- HOME SCREEN -->
+          <div class="app-screen" id="screen-home">
+            <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+              <div class="phone-statusbar">
+                <span class="status-time">9:41</span>
+                <div class="status-icons">
+                  <span>●●●</span>
+                  <span>📶</span>
+                  <span>🔋</span>
+                </div>
+              </div>
+              <div class="app-home-header">
+                <div class="app-home-greet">Good morning 👋</div>
+                <div class="app-home-name">Rahul Kumar</div>
+                <div class="app-home-location">
+                  <span>📍</span> Connaught Place, New Delhi
+                </div>
+              </div>
+              <div class="app-search-bar">🔍 &nbsp;Search for services…</div>
+              <div class="app-service-section">
+                <div class="app-section-title">CHOOSE CATEGORY</div>
+                <div class="app-service-grid">
+                  <div class="service-card active" onclick="startDemo('vehicle')">
+                    <div class="service-icon blue">🚗</div>
+                    <div class="service-card-title">Vehicle</div>
+                    <div class="service-card-sub">Puncture, battery, towing</div>
+                  </div>
+                  <div class="service-card" onclick="startDemo('home')">
+                    <div class="service-icon green">🏠</div>
+                    <div class="service-card-title">Appliance</div>
+                    <div class="service-card-sub">AC, fridge, washing machine</div>
+                  </div>
+                  <div class="service-card" onclick="startDemo('vehicle')">
+                    <div class="service-icon blue">🔧</div>
+                    <div class="service-card-title">Mechanic</div>
+                    <div class="service-card-sub">Engine, brakes, service</div>
+                  </div>
+                  <div class="service-card" onclick="startDemo('home')">
+                    <div class="service-icon green">❄️</div>
+                    <div class="service-card-title">AC Repair</div>
+                    <div class="service-card-sub">Cooling, gas refill, service</div>
+                  </div>
+                </div>
+              </div>
+              <div class="app-quick-section">
+                <div class="app-section-title">RECENT REQUESTS</div>
+                <div class="quick-row">
+                  <div class="quick-chip active">Tyre Puncture</div>
+                  <div class="quick-chip">AC Not Cooling</div>
+                  <div class="quick-chip">Battery Dead</div>
+                  <div class="quick-chip">Fridge Repair</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBLEM SCREEN -->
+          <div class="app-screen hidden" id="screen-problem">
+            <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+              <div class="app-topbar">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <button onclick="showScreen('home')" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink2)">←</button>
+                  <div>
+                    <div class="app-topbar-title">Describe Problem</div>
+                    <div class="app-topbar-sub">Tell us what happened</div>
+                  </div>
+                </div>
+              </div>
+              <div class="req-screen">
+                <div class="req-label">Service Type</div>
+                <div style="display:flex;gap:8px;margin-bottom:16px">
+                  <div class="quick-chip active" id="type-vehicle">🚗 Vehicle</div>
+                  <div class="quick-chip" id="type-home">🏠 Appliance</div>
+                </div>
+                <div class="req-label">Describe the Problem</div>
+                <textarea class="req-input" rows="3" placeholder="e.g. Tyre puncture on front right wheel…" id="problem-input"></textarea>
+                <div style="margin-top:14px">
+                  <div class="req-label">Select Urgency</div>
+                  <div class="urgency-options">
+                    <div class="urgency-opt" onclick="selectUrgency(this,'normal')">
+                      <div class="urgency-left">
+                        <div class="urgency-dot normal"></div>
+                        <div><div class="urgency-title">Normal</div><div class="urgency-sub">Within 1-2 hours</div></div>
+                      </div>
+                    </div>
+                    <div class="urgency-opt" onclick="selectUrgency(this,'urgent')">
+                      <div class="urgency-left">
+                        <div class="urgency-dot urgent"></div>
+                        <div><div class="urgency-title">Urgent</div><div class="urgency-sub">Within 30 minutes</div></div>
+                      </div>
+                    </div>
+                    <div class="urgency-opt em selected" onclick="selectUrgency(this,'emergency')">
+                      <div class="urgency-left">
+                        <div class="urgency-dot emergency"></div>
+                        <div><div class="urgency-title">🔴 Emergency</div><div class="urgency-sub">ASAP – highest priority</div></div>
+                      </div>
+                      <div class="urgency-badge">NOW</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="req-label">Your Location</div>
+                <div style="height:80px;background:linear-gradient(135deg,#dbeafe,#d1fae5);border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--ink2);font-size:13px;font-weight:500;margin-bottom:16px">
+                  📍 Connaught Place, New Delhi &nbsp;<span style="color:var(--green);font-size:11px">● Live</span>
+                </div>
+                <button class="btn-accept" onclick="postRequest()">Post Request →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SEARCHING SCREEN -->
+          <div class="app-screen hidden" id="screen-searching">
+            <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center">
+              <div style="position:relative;width:120px;height:120px;margin-bottom:24px">
+                <div style="width:60px;height:60px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2">📡</div>
+                <div style="position:absolute;inset:0;border:2px solid var(--blue);border-radius:50%;opacity:0;animation:ring-out 2s ease-out 0s infinite"></div>
+                <div style="position:absolute;inset:-15px;border:2px solid var(--blue);border-radius:50%;opacity:0;animation:ring-out 2s ease-out 0.5s infinite"></div>
+                <div style="position:absolute;inset:-30px;border:2px solid var(--blue);border-radius:50%;opacity:0;animation:ring-out 2s ease-out 1s infinite"></div>
+              </div>
+              <div style="font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px">Broadcasting Request…</div>
+              <div style="font-size:13px;color:var(--ink3);margin-bottom:24px">Finding helpers near Connaught Place</div>
+              <div id="helper-found-count" style="font-size:28px;font-weight:800;font-family:var(--font-head);color:var(--blue)">0</div>
+              <div style="font-size:13px;color:var(--ink3);margin-bottom:20px">helpers found so far</div>
+              <div class="progress-bar" style="width:200px">
+                <div class="progress-fill" id="search-progress" style="width:0%"></div>
+              </div>
+              <div style="font-size:12px;color:var(--ink4);margin-top:8px" id="search-status">Scanning 5km radius…</div>
+            </div>
+          </div>
+
+          <!-- BIDS SCREEN -->
+          <div class="app-screen hidden" id="screen-bids">
+            <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+              <div class="app-topbar">
+                <div class="app-topbar-title">Bids Received 🎯</div>
+                <div class="app-topbar-sub">3 helpers responded · Compare & choose</div>
+              </div>
+              <div style="padding:12px">
+                <div style="background:var(--blue-light);border:1px solid #bfdbfe;border-radius:12px;padding:12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
+                  <span style="font-size:14px">ℹ️</span>
+                  <div style="font-size:12px;color:#1e40af">You are in control. Choose any helper based on price, time, or rating. No pressure.</div>
+                </div>
+                <!-- Bid 1 -->
+                <div class="bid-card" id="bid1" onclick="selectBid(1)">
+                  <div class="bid-header">
+                    <div class="bid-avatar">RK</div>
+                    <div style="flex:1">
+                      <div class="bid-name">Raju Kumar</div>
+                      <div class="bid-rating"><span class="bid-star">★</span>4.8 · 312 jobs</div>
+                    </div>
+                    <div style="text-align:right">
+                      <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--ink)">₹250</div>
+                      <div style="font-size:11px;color:var(--ink3)">~20 min</div>
+                    </div>
+                  </div>
+                  <div class="bid-details">
+                    <div class="bid-detail"><div class="bid-detail-val">₹250</div><div class="bid-detail-key">Price</div></div>
+                    <div class="bid-detail"><div class="bid-detail-val">20m</div><div class="bid-detail-key">ETA</div></div>
+                    <div class="bid-detail"><div class="bid-detail-val">4.8⭐</div><div class="bid-detail-key">Rating</div></div>
+                  </div>
+                </div>
+                <!-- Bid 2 – BEST -->
+                <div class="bid-card best" id="bid2" onclick="selectBid(2)">
+                  <div class="bid-header">
+                    <div class="bid-avatar" style="background:linear-gradient(135deg,var(--green),#16a34a)">MV</div>
+                    <div style="flex:1">
+                      <div class="bid-name">Mohan Verma</div>
+                      <div class="bid-rating"><span class="bid-star">★</span>4.9 · 589 jobs</div>
+                    </div>
+                    <div style="text-align:right">
+                      <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--green)">₹200</div>
+                      <div style="font-size:11px;color:var(--ink3)">~30 min</div>
+                    </div>
+                  </div>
+                  <div class="bid-details">
+                    <div class="bid-detail"><div class="bid-detail-val" style="color:var(--green)">₹200</div><div class="bid-detail-key">Price</div></div>
+                    <div class="bid-detail"><div class="bid-detail-val">30m</div><div class="bid-detail-key">ETA</div></div>
+                    <div class="bid-detail"><div class="bid-detail-val">4.9⭐</div><div class="bid-detail-key">Rating</div></div>
+                  </div>
+                </div>
+                <!-- Bid 3 -->
+                <div class="bid-card" id="bid3" onclick="selectBid(3)">
+                  <div class="bid-header">
+                    <div class="bid-avatar" style="background:linear-gradient(135deg,var(--amber),#d97706)">AS</div>
+                    <div style="flex:1">
+                      <div class="bid-name">Ajay Singh</div>
+                      <div class="bid-rating"><span class="bid-star">★</span>4.7 · 145 jobs</div>
+                    </div>
+                    <div style="text-align:right">
+                      <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--ink)">₹300</div>
+                      <div style="font-size:11px;color:var(--ink3)">~15 min</div>
+                    </div>
+                  </div>
+                  <div class="bid-details">
+                    <div class="bid-detail"><div class="bid-detail-val">₹300</div><div class="bid-detail-key">Price</div></div>
+                    <div class="bid-detail"><div class="bid-detail-val">15m</div><div class="bid-detail-key">ETA</div></div>
+                    <div class="bid-detail"><div class="bid-detail-val">4.7⭐</div><div class="bid-detail-key">Rating</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TRACKING SCREEN -->
+          <div class="app-screen hidden" id="screen-tracking">
+            <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+              <div class="app-topbar">
+                <div class="app-topbar-title">Mohan is on the way 🔧</div>
+                <div class="app-topbar-sub" id="tracking-eta">ETA: ~28 minutes · ₹200</div>
+              </div>
+              <div style="padding:12px">
+                <div class="status-map">
+                  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 140">
+                    <path d="M10 80 Q60 60 100 70 Q140 80 160 50 Q200 30 270 60" class="map-road" stroke="#d1d5db"/>
+                    <path d="M40 130 Q80 100 130 110 Q180 120 230 90 Q250 80 270 85" class="map-road" stroke="#d1d5db"/>
+                    <path d="M10 100 L270 100" class="map-road" stroke="#e2e8f0" stroke-width="2"/>
+                  </svg>
+                  <div class="map-car">🔧</div>
+                  <div class="map-pin">📍</div>
+                </div>
+                <div class="status-steps">
+                  <div class="status-step done">
+                    <div class="step-dot">✓</div>
+                    <div class="step-info"><div class="step-title">Request Posted</div><div class="step-time">9:41 AM</div></div>
+                  </div>
+                  <div class="status-step done">
+                    <div class="step-dot">✓</div>
+                    <div class="step-info"><div class="step-title">Bid Accepted – Mohan Verma</div><div class="step-time">9:43 AM</div></div>
+                  </div>
+                  <div class="status-step active">
+                    <div class="step-dot" style="color:#fff;font-size:11px">→</div>
+                    <div class="step-info"><div class="step-title">Helper On The Way</div><div class="step-time" id="live-eta">~28 min remaining</div></div>
+                  </div>
+                  <div class="status-step">
+                    <div class="step-dot" style="color:var(--ink3);font-size:12px">4</div>
+                    <div class="step-info"><div class="step-title">In Progress</div><div class="step-time">—</div></div>
+                  </div>
+                  <div class="status-step">
+                    <div class="step-dot" style="color:var(--ink3);font-size:12px">5</div>
+                    <div class="step-info"><div class="step-title">Completed</div><div class="step-time">—</div></div>
+                  </div>
+                </div>
+                <div style="margin-top:14px">
+                  <div style="font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:8px">CHAT WITH MOHAN</div>
+                  <div class="chat-area" id="chat-area">
+                    <div class="chat-msg in">On my way! Will arrive in ~28 min 🔧</div>
+                    <div class="chat-msg out">Thanks! Gate is open, park outside</div>
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:8px">
+                    <input style="flex:1;background:#fff;border:1px solid var(--bg3);border-radius:50px;padding:8px 14px;font-size:12px;font-family:var(--font-body);outline:none" id="chat-input" placeholder="Type a message…"/>
+                    <button onclick="sendChat()" style="background:var(--blue);border:none;border-radius:50px;padding:8px 14px;color:#fff;font-size:12px;cursor:pointer;font-family:var(--font-body)">Send</button>
+                  </div>
+                </div>
+                <button class="btn-accept" style="margin-top:14px;background:linear-gradient(135deg,var(--green),var(--green-dark))" onclick="completeService()">Mark as Completed ✓</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- COMPLETION SCREEN -->
+          <div class="app-screen hidden" id="screen-complete">
+            <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+              <div style="height:44px;background:#fff"></div>
+              <div class="completion-screen">
+                <div class="completion-icon">✓</div>
+                <div class="completion-title">Service Completed!</div>
+                <div class="completion-sub">Tyre puncture fixed by Mohan Verma</div>
+                <div class="receipt-card">
+                  <div class="receipt-row"><span class="receipt-key">Service</span><span class="receipt-val">Tyre Puncture Fix</span></div>
+                  <div class="receipt-row"><span class="receipt-key">Helper</span><span class="receipt-val">Mohan Verma</span></div>
+                  <div class="receipt-row"><span class="receipt-key">Duration</span><span class="receipt-val">35 minutes</span></div>
+                  <div class="receipt-row"><span class="receipt-key">Parts used</span><span class="receipt-val">Puncture kit</span></div>
+                  <div class="receipt-row total"><span class="receipt-key">Total Paid</span><span class="receipt-val" style="color:var(--blue)">₹200</span></div>
+                </div>
+                <div style="font-size:14px;font-weight:600;color:var(--ink);margin-top:16px">Rate your experience</div>
+                <div class="stars" id="star-rating">
+                  <span class="star" onclick="rateStar(1)">⭐</span>
+                  <span class="star" onclick="rateStar(2)">⭐</span>
+                  <span class="star" onclick="rateStar(3)">⭐</span>
+                  <span class="star" onclick="rateStar(4)">⭐</span>
+                  <span class="star" onclick="rateStar(5)">⭐</span>
+                </div>
+                <button class="btn-accept" onclick="showScreen('home')" style="margin-top:8px">Book Another Service</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- NAVBAR -->
+          <div class="app-navbar">
+            <div class="nav-item active" onclick="showScreen('home')">
+              <div class="nav-item-icon">🏠</div>
+              <div class="nav-item-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="showScreen('bids')">
+              <div class="nav-item-icon">📋</div>
+              <div class="nav-item-label">Requests</div>
+            </div>
+            <div class="nav-item" onclick="showScreen('tracking')">
+              <div class="nav-item-icon">📍</div>
+              <div class="nav-item-label">Track</div>
+            </div>
+            <div class="nav-item">
+              <div class="nav-item-icon">👤</div>
+              <div class="nav-item-label">Profile</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- PROBLEM SECTION -->
+<section id="problem">
+  <div class="section-inner">
+    <div style="max-width:600px">
+      <div class="section-badge reveal">😤 The Real Problem</div>
+      <h2 class="section-title reveal reveal-delay-1" style="color:#fff">You've been through<br>this before.</h2>
+      <p class="section-sub reveal reveal-delay-2">Every time something breaks, you're on your own. No reliable help. No idea of the cost. Wasted hours.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="problem-emoji">📞</div>
+        <div class="problem-title">No Quick Help</div>
+        <div class="problem-desc">You call 5 numbers, get 2 busy signals, 1 voicemail, and 2 shops too far away. All while stuck on the road.</div>
+      </div>
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-emoji">💸</div>
+        <div class="problem-title">No Price Clarity</div>
+        <div class="problem-desc">Mechanics quote ₹800 for a ₹150 job. No transparency. No comparison. You overpay every time.</div>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-emoji">⏳</div>
+        <div class="problem-title">Wasted Time</div>
+        <div class="problem-desc">Hours lost searching, waiting, explaining the same problem again and again. Your day is ruined.</div>
+      </div>
+    </div>
+    <div class="scenario-bar reveal" style="margin-top:40px">
+      <div class="scenario-emoji hazard-light">🔆</div>
+      <div class="scenario-text">
+        <h4>Real Scenario: Car Breakdown at 8 PM</h4>
+        <p>Rahul's car gets a flat tyre on NH-28. Here's what happens next with the old way vs SwaDrive:</p>
+        <div class="call-animation">
+          <div class="call-bubble"><div class="call-icon">✗</div>Shop 1: Not reachable</div>
+          <div class="call-bubble"><div class="call-icon">✗</div>Shop 2: Too far away</div>
+          <div class="call-bubble"><div class="call-icon" style="background:var(--green)">✓</div>SwaDrive: ₹200 bid in 9 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-badge reveal">⚡ How It Works</div>
+    <h2 class="section-title reveal reveal-delay-1">From stuck to sorted<br>in under 15 minutes.</h2>
+    <p class="section-sub reveal reveal-delay-2">The entire flow — from posting your problem to getting it fixed — designed for speed and transparency.</p>
+    <div class="steps-container">
+      <div class="step-row reveal">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Post Your Problem</h3>
+          <p>Open SwaDrive, describe what went wrong, pick your urgency level. Location is auto-detected. Takes 60 seconds.</p>
+        </div>
+        <div class="step-visual">
+          <div style="text-align:center">
+            <div style="background:var(--blue-light);border-radius:12px;padding:14px;display:inline-block;margin-bottom:10px">
+              <div style="font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:6px">Problem</div>
+              <div style="background:#fff;border:2px solid var(--blue);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--ink)">Tyre puncture – front right</div>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:center">
+              <div style="background:#FEE2E2;border:1px solid #fca5a5;border-radius:8px;padding:6px 10px;font-size:12px;color:var(--red);font-weight:600">🔴 Emergency</div>
+              <div style="background:var(--bg2);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--ink2)">📍 Auto-detected</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-row reveal reveal-delay-1">
+        <div class="step-num" style="background:var(--green)">2</div>
+        <div class="step-content">
+          <h3>Request Broadcasts to Helpers</h3>
+          <p>Your request is instantly sent to all verified helpers in your area. Multiple mechanics & technicians get notified simultaneously.</p>
+        </div>
+        <div class="step-visual">
+          <div class="broadcast-viz">
+            <div class="ring ring1"></div>
+            <div class="ring ring2"></div>
+            <div class="ring ring3"></div>
+            <div class="broadcast-center">📡</div>
+            <div class="helper-dot hd1 active">🔧</div>
+            <div class="helper-dot hd2 active" style="animation-delay:0.3s">🔩</div>
+            <div class="helper-dot hd3 active" style="animation-delay:0.6s">⚙️</div>
+            <div class="helper-dot hd4 active" style="animation-delay:0.9s">🛠️</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-row reveal reveal-delay-2">
+        <div class="step-num" style="background:var(--amber)">3</div>
+        <div class="step-content">
+          <h3>Helpers Send Their Bids</h3>
+          <p>Interested helpers reply with their price quote and estimated arrival time. You see all bids side by side. Full transparency, zero pressure.</p>
+        </div>
+        <div class="step-visual">
+          <div style="width:100%">
+            <div style="display:flex;justify-content:space-between;background:#fff;border:1px solid var(--bg3);border-radius:10px;padding:10px;margin-bottom:6px;font-size:12px">
+              <span>Raju K. · ⭐4.8</span>
+              <strong>₹250 · 20min</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;background:var(--green-light);border:2px solid var(--green);border-radius:10px;padding:10px;margin-bottom:6px;font-size:12px">
+              <span>Mohan V. · ⭐4.9 ✓</span>
+              <strong style="color:var(--green)">₹200 · 30min</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;background:#fff;border:1px solid var(--bg3);border-radius:10px;padding:10px;font-size:12px">
+              <span>Ajay S. · ⭐4.7</span>
+              <strong>₹300 · 15min</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-row reveal">
+        <div class="step-num" style="background:#7c3aed">4</div>
+        <div class="step-content">
+          <h3>You Choose the Best Offer</h3>
+          <p>Compare price, ETA, and ratings. Pick whoever fits your need. Tap Accept — the helper is locked in immediately. One tap. Done.</p>
+        </div>
+        <div class="step-visual">
+          <div style="text-align:center">
+            <div style="background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;border-radius:50px;padding:12px 24px;font-size:14px;font-weight:600;display:inline-block;box-shadow:0 4px 16px rgba(34,197,94,0.3)">Accept Best Offer ✓</div>
+            <div style="font-size:12px;color:var(--ink3);margin-top:10px">Mohan Verma confirmed instantly</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-row reveal reveal-delay-1">
+        <div class="step-num" style="background:var(--blue)">5</div>
+        <div class="step-content">
+          <h3>Track & Communicate Live</h3>
+          <p>Real-time GPS tracking, live status updates, built-in chat with the helper. Know exactly where they are and when they'll arrive.</p>
+        </div>
+        <div class="step-visual">
+          <div style="font-size:12px;color:var(--ink2);background:var(--bg2);border-radius:12px;padding:12px">
+            <div style="display:flex;gap:8px;margin-bottom:8px"><span>🔧</span><div style="background:#fff;border-radius:8px;padding:5px 10px;font-size:12px">On my way! ETA 28 min</div></div>
+            <div style="display:flex;gap:8px;flex-direction:row-reverse"><span>👤</span><div style="background:var(--blue);color:#fff;border-radius:8px;padding:5px 10px;font-size:12px">Gate open, park outside</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIDDING SHOWCASE -->
+<section id="bids">
+  <div class="section-inner">
+    <div class="bids-showcase">
+      <div class="bids-left">
+        <div class="section-badge reveal">🎯 Core USP</div>
+        <h2 class="section-title reveal reveal-delay-1">Transparent Bidding.<br>You're in control.</h2>
+        <p class="section-sub reveal reveal-delay-2">No more fixed rates. No more overpaying. Every helper competes for your business with honest, real-time bids.</p>
+        <div class="feature-list">
+          <div class="feature-item reveal">
+            <div class="feature-icon blue">⚖️</div>
+            <div class="feature-text">
+              <h4>Competitive Bidding</h4>
+              <p>Multiple helpers bid. The market sets the fair price — not the helper.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal reveal-delay-1">
+            <div class="feature-icon green">✓</div>
+            <div class="feature-text">
+              <h4>Verified Helpers Only</h4>
+              <p>Every helper is ID-verified, and background-checked before joining.</p>
+            </div>
+          </div>
+          <div class="feature-item reveal reveal-delay-2">
+            <div class="feature-icon amber">⭐</div>
+            <div class="feature-text">
+              <h4>Real Ratings & Reviews</h4>
+              <p>Ratings from real customers. No fake reviews. Lowest-rated helpers are removed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="bids-phone">
+          <div class="bids-screen">
+            <div class="bids-header">3 Bids Received</div>
+            <div class="bids-sub">Tyre puncture · Connaught Place · 🔴 Emergency</div>
+            <div class="bid-showcase-card" onclick="showcaseBid(this,1)">
+              <div class="bsc-top">
+                <div class="bsc-name">Raju Kumar · ⭐4.8</div>
+                <div class="bsc-price">₹250</div>
+              </div>
+              <div class="bsc-meta">
+                <div class="bsc-meta-item">🕐 20 min ETA</div>
+                <div class="bsc-meta-item">📍 1.2 km away</div>
+                <div class="bsc-meta-item">🔧 312 jobs</div>
+              </div>
+            </div>
+            <div class="bid-showcase-card selected" onclick="showcaseBid(this,2)">
+              <div style="position:absolute;top:-1px;right:14px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:0 0 8px 8px">BEST VALUE</div>
+              <div class="bsc-top">
+                <div class="bsc-name">Mohan Verma · ⭐4.9</div>
+                <div class="bsc-price best-price">₹200</div>
+              </div>
+              <div class="bsc-meta">
+                <div class="bsc-meta-item">🕐 30 min ETA</div>
+                <div class="bsc-meta-item">📍 2.1 km away</div>
+                <div class="bsc-meta-item">🔧 589 jobs</div>
+              </div>
+            </div>
+            <div class="bid-showcase-card" onclick="showcaseBid(this,3)">
+              <div class="bsc-top">
+                <div class="bsc-name">Ajay Singh · ⭐4.7</div>
+                <div class="bsc-price">₹300</div>
+              </div>
+              <div class="bsc-meta">
+                <div class="bsc-meta-item">🕐 15 min ETA</div>
+                <div class="bsc-meta-item">📍 0.8 km away</div>
+                <div class="bsc-meta-item">🔧 145 jobs</div>
+              </div>
+            </div>
+            <button class="bids-accept-btn" id="accept-btn" onclick="doBidAccept()">
+              <span id="accept-btn-text">✓ Accept Mohan's Bid – ₹200</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-badge reveal">🛠️ Services</div>
+    <h2 class="section-title reveal reveal-delay-1">Everything in one<br>platform.</h2>
+    <p class="section-sub reveal reveal-delay-2">Vehicle emergencies, home appliances, scheduled maintenance — all accessible through one app with the same transparent bidding system.</p>
+    <div class="services-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon-wrap blue">🔧</div>
+        <div class="svc-title">Tyre & Puncture</div>
+        <div class="svc-desc">Roadside tyre change, puncture repair, inflation. Available 24/7 in your city.</div>
+        <div class="svc-tags"><span class="tag">24/7</span><span class="tag">Roadside</span><span class="tag">Emergency</span></div>
+      </div>
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-icon-wrap amber">🔋</div>
+        <div class="svc-title">Battery & Jumpstart</div>
+        <div class="svc-desc">Dead battery? Get a jumpstart or replacement battery delivered and installed on-site.</div>
+        <div class="svc-tags"><span class="tag">Jumpstart</span><span class="tag">Replacement</span><span class="tag">On-site</span></div>
+      </div>
+      <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-icon-wrap purple">🔑</div>
+        <div class="svc-title">Car Lockout</div>
+        <div class="svc-desc">Keys locked inside? Our licensed locksmiths open your vehicle safely without damage.</div>
+        <div class="svc-tags"><span class="tag">Licensed</span><span class="tag">Safe</span><span class="tag">No damage</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon-wrap teal">❄️</div>
+        <div class="svc-title">AC Repair</div>
+        <div class="svc-desc">Not cooling? Leaking? Gas refill or compressor issue — get certified AC technicians home.</div>
+        <div class="svc-tags"><span class="tag">Certified</span><span class="tag">Gas refill</span><span class="tag">All brands</span></div>
+      </div>
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-icon-wrap green">🧊</div>
+        <div class="svc-title">Fridge & Washer</div>
+        <div class="svc-desc">Refrigerator not cooling, washing machine not spinning — get same-day repairs at transparent prices.</div>
+        <div class="svc-tags"><span class="tag">Same-day</span><span class="tag">Warranty</span><span class="tag">All brands</span></div>
+      </div>
+      <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-icon-wrap red">🚗</div>
+        <div class="svc-title">Towing & Recovery</div>
+        <div class="svc-desc">Vehicle breakdown beyond repair? Get it towed to your nearest workshop at fair rates, no hidden charges.</div>
+        <div class="svc-tags"><span class="tag">Fair rates</span><span class="tag">City-wide</span><span class="tag">No hidden fees</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO SECTION -->
+<section id="live-demo">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="section-badge" style="margin:0 auto 16px">📱 Interactive Demo</div>
+      <h2 class="section-title" style="text-align:center">Try the app right here.</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center">This is the real app flow. Tap through each step to see exactly what you'd experience.</p>
+    </div>
+    <div class="demo-container">
+      <div class="demo-phone-wrap">
+        <div class="phone-frame" style="transform:none">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <!-- DEMO screens repeat in miniature -->
+            <div class="app-screen" id="dscreen-home">
+              <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+                <div style="height:44px;background:#fff;display:flex;align-items:flex-end;padding:0 20px 8px;justify-content:space-between">
+                  <span style="font-size:14px;font-weight:600">9:41</span>
+                  <span style="font-size:11px">●●● 📶 🔋</span>
+                </div>
+                <div style="background:linear-gradient(135deg,var(--blue),#1d4ed8);padding:20px 20px 36px;color:#fff">
+                  <div style="font-size:13px;opacity:0.8">Good morning 👋</div>
+                  <div style="font-family:var(--font-head);font-size:20px;font-weight:700;margin:2px 0">Rahul Kumar</div>
+                  <div style="font-size:12px;opacity:0.75">📍 Connaught Place, New Delhi</div>
+                </div>
+                <div style="margin:-24px 16px 0;background:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.12);position:relative;z-index:2;font-size:13px;color:var(--ink3)">🔍 &nbsp;Search for services…</div>
+                <div style="padding:20px 16px 0">
+                  <div style="font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:10px">CHOOSE CATEGORY</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                    <div onclick="demoGo('problem')" style="background:#fff;border-radius:14px;padding:14px;border:2px solid var(--blue);background:#EFF6FF;cursor:pointer">
+                      <div style="font-size:24px;margin-bottom:6px">🚗</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--ink)">Vehicle</div>
+                      <div style="font-size:11px;color:var(--ink3)">Puncture, battery</div>
+                    </div>
+                    <div onclick="demoGo('problem')" style="background:#fff;border-radius:14px;padding:14px;border:2px solid var(--bg3);cursor:pointer">
+                      <div style="font-size:24px;margin-bottom:6px">🏠</div>
+                      <div style="font-size:13px;font-weight:600;color:var(--ink)">Appliance</div>
+                      <div style="font-size:11px;color:var(--ink3)">AC, fridge</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-screen hidden" id="dscreen-problem">
+              <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+                <div style="background:#fff;padding:16px 20px 14px;border-bottom:1px solid #F1F5F9;display:flex;align-items:center;gap:8px">
+                  <button onclick="demoGo('home')" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink2)">←</button>
+                  <div style="font-family:var(--font-head);font-size:16px;font-weight:700">Describe Problem</div>
+                </div>
+                <div style="padding:16px">
+                  <div style="font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Your Problem</div>
+                  <div style="background:#fff;border:2px solid var(--blue);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--ink);min-height:60px" id="demo-typing"></div>
+                  <div style="margin-top:14px">
+                    <div style="font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Urgency</div>
+                    <div style="background:#FEF2F2;border:2px solid var(--red);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center">
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <div style="width:10px;height:10px;border-radius:50%;background:var(--red);animation:blink 1s infinite"></div>
+                        <div>
+                          <div style="font-size:13px;font-weight:600;color:var(--ink)">🔴 Emergency</div>
+                          <div style="font-size:11px;color:var(--ink3)">ASAP – highest priority</div>
+                        </div>
+                      </div>
+                      <div style="background:#FEE2E2;color:var(--red);font-size:11px;font-weight:600;padding:3px 8px;border-radius:50px">NOW</div>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px;height:70px;background:linear-gradient(135deg,#dbeafe,#d1fae5);border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--ink2);font-size:13px;font-weight:500">
+                    📍 Connaught Place, New Delhi &nbsp;<span style="color:var(--green);font-size:11px">● Live</span>
+                  </div>
+                  <button onclick="demoGo('searching')" style="width:100%;background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-top:14px">Post Request →</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-screen hidden" id="dscreen-searching">
+              <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center">
+                <div style="position:relative;width:120px;height:120px;margin-bottom:24px">
+                  <div style="width:60px;height:60px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2">📡</div>
+                  <div style="position:absolute;inset:0;border:2px solid var(--blue);border-radius:50%;opacity:0;animation:ring-out 2s ease-out 0s infinite"></div>
+                  <div style="position:absolute;inset:-15px;border:2px solid var(--blue);border-radius:50%;opacity:0;animation:ring-out 2s ease-out 0.5s infinite"></div>
+                </div>
+                <div style="font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px">Finding Helpers…</div>
+                <div style="font-size:13px;color:var(--ink3);margin-bottom:20px">Broadcasting to nearby mechanics</div>
+                <div style="font-size:28px;font-weight:800;font-family:var(--font-head);color:var(--blue)" id="demo-count">0</div>
+                <div style="font-size:13px;color:var(--ink3);margin-bottom:14px">helpers responded</div>
+                <div style="height:3px;background:var(--bg3);border-radius:3px;overflow:hidden;width:160px">
+                  <div id="demo-progress" style="height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:3px;width:0%;transition:width 0.5s ease"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-screen hidden" id="dscreen-bids">
+              <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+                <div style="background:#fff;padding:16px 20px 14px;border-bottom:1px solid #F1F5F9">
+                  <div style="font-family:var(--font-head);font-size:16px;font-weight:700">Bids Received 🎯</div>
+                  <div style="font-size:12px;color:var(--ink3);margin-top:1px">3 helpers · Compare & choose</div>
+                </div>
+                <div style="padding:12px">
+                  <div id="dbid1" onclick="demoSelectBid(1)" style="background:#fff;border:2px solid var(--bg3);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all 0.3s">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+                      <div style="display:flex;gap:8px;align-items:center">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">RK</div>
+                        <div><div style="font-size:13px;font-weight:600;color:var(--ink)">Raju Kumar</div><div style="font-size:11px;color:var(--ink3)">⭐4.8 · 312 jobs</div></div>
+                      </div>
+                      <div style="text-align:right"><div style="font-family:var(--font-head);font-size:18px;font-weight:800;color:var(--ink)">₹250</div><div style="font-size:11px;color:var(--ink3)">~20 min</div></div>
+                    </div>
+                  </div>
+                  <div id="dbid2" onclick="demoSelectBid(2)" style="background:var(--green-light);border:2px solid var(--green);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;position:relative;transition:all 0.3s">
+                    <div style="position:absolute;top:-1px;right:14px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:0 0 8px 8px">BEST VALUE</div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+                      <div style="display:flex;gap:8px;align-items:center">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--green),var(--green-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">MV</div>
+                        <div><div style="font-size:13px;font-weight:600;color:var(--ink)">Mohan Verma</div><div style="font-size:11px;color:var(--ink3)">⭐4.9 · 589 jobs</div></div>
+                      </div>
+                      <div style="text-align:right"><div style="font-family:var(--font-head);font-size:18px;font-weight:800;color:var(--green)">₹200</div><div style="font-size:11px;color:var(--ink3)">~30 min</div></div>
+                    </div>
+                  </div>
+                  <div id="dbid3" onclick="demoSelectBid(3)" style="background:#fff;border:2px solid var(--bg3);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all 0.3s">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+                      <div style="display:flex;gap:8px;align-items:center">
+                        <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--amber),#d97706);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">AS</div>
+                        <div><div style="font-size:13px;font-weight:600;color:var(--ink)">Ajay Singh</div><div style="font-size:11px;color:var(--ink3)">⭐4.7 · 145 jobs</div></div>
+                      </div>
+                      <div style="text-align:right"><div style="font-family:var(--font-head);font-size:18px;font-weight:800;color:var(--ink)">₹300</div><div style="font-size:11px;color:var(--ink3)">~15 min</div></div>
+                    </div>
+                  </div>
+                  <button id="demo-accept-btn" onclick="demoGo('tracking')" style="width:100%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:8px">✓ Accept Mohan – ₹200</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-screen hidden" id="dscreen-tracking">
+              <div style="height:100%;overflow-y:auto;padding-bottom:60px">
+                <div style="background:#fff;padding:16px 20px 14px;border-bottom:1px solid #F1F5F9">
+                  <div style="font-family:var(--font-head);font-size:16px;font-weight:700">Mohan is on the way 🔧</div>
+                  <div style="font-size:12px;color:var(--ink3);margin-top:1px">ETA: ~28 minutes · ₹200 agreed</div>
+                </div>
+                <div style="padding:12px">
+                  <div style="height:130px;background:linear-gradient(135deg,#e8f4f8,#d1e8ff);border-radius:14px;position:relative;overflow:hidden;margin-bottom:14px">
+                    <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 280 130">
+                      <path d="M10 80 Q60 60 100 70 Q140 80 160 50 Q200 30 270 60" stroke="#94a3b8" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <div style="position:absolute;animation:drive 3s linear infinite;font-size:18px;left:20%;top:55%">🔧</div>
+                    <div style="position:absolute;right:18%;top:25%;font-size:22px">📍</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:0">
+                    <div style="display:flex;gap:10px;padding:8px 0;position:relative">
+                      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;z-index:1">✓</div>
+                      <div style="padding-top:4px"><div style="font-size:13px;font-weight:600;color:var(--ink)">Request Posted</div><div style="font-size:11px;color:var(--ink3)">9:41 AM</div></div>
+                    </div>
+                    <div style="display:flex;gap:10px;padding:8px 0;position:relative">
+                      <div style="width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;z-index:1">✓</div>
+                      <div style="padding-top:4px"><div style="font-size:13px;font-weight:600;color:var(--ink)">Bid Accepted</div><div style="font-size:11px;color:var(--ink3)">Mohan Verma · 9:43 AM</div></div>
+                    </div>
+                    <div style="display:flex;gap:10px;padding:8px 0">
+                      <div style="width:28px;height:28px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;animation:pulse-ring 1.5s ease infinite;z-index:1">→</div>
+                      <div style="padding-top:4px"><div style="font-size:13px;font-weight:600;color:var(--ink)">On The Way</div><div style="font-size:11px;color:var(--green)">~28 min remaining</div></div>
+                    </div>
+                  </div>
+                  <button onclick="demoGo('complete')" style="width:100%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;border:none;border-radius:50px;padding:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-top:14px">Mark as Completed ✓</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-screen hidden" id="dscreen-complete">
+              <div style="height:100%;overflow-y:auto;padding-bottom:20px">
+                <div style="height:44px;background:#fff"></div>
+                <div style="display:flex;flex-direction:column;align-items:center;padding:20px 16px;text-align:center">
+                  <div style="width:70px;height:70px;background:linear-gradient(135deg,var(--green),#16a34a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:14px;animation:pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1)">✓</div>
+                  <div style="font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px">Service Completed!</div>
+                  <div style="font-size:13px;color:var(--ink3);margin-bottom:18px">Tyre fixed by Mohan Verma</div>
+                  <div style="background:#fff;border-radius:14px;padding:14px;width:100%;text-align:left;border:1px solid var(--bg3);font-size:13px">
+                    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bg3)"><span style="color:var(--ink3)">Service</span><span style="font-weight:500">Tyre Puncture</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bg3)"><span style="color:var(--ink3)">Helper</span><span style="font-weight:500">Mohan Verma</span></div>
+                    <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-weight:600;font-size:14px"><span>Total Paid</span><span style="color:var(--blue)">₹200</span></div>
+                  </div>
+                  <div style="display:flex;gap:6px;margin:16px 0;font-size:26px">⭐⭐⭐⭐⭐</div>
+                  <button onclick="demoGo('home')" style="width:100%;background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;border:none;border-radius:50px;padding:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body)">Book Another Service</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-navbar">
+              <div class="nav-item active"><div class="nav-item-icon">🏠</div><div class="nav-item-label">Home</div></div>
+              <div class="nav-item"><div class="nav-item-icon">📋</div><div class="nav-item-label">Requests</div></div>
+              <div class="nav-item"><div class="nav-item-icon">📍</div><div class="nav-item-label">Track</div></div>
+              <div class="nav-item"><div class="nav-item-icon">👤</div><div class="nav-item-label">Profile</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title" style="margin-bottom:24px">Complete customer<br>journey.</h2>
+        <div class="demo-info">
+          <div class="demo-step-btn active" onclick="demoJump('home',0)">
+            <div class="demo-step-num">1</div>
+            <div><div class="demo-step-title">Choose a Service</div><div class="demo-step-desc">Select vehicle or appliance category from the home screen</div></div>
+          </div>
+          <div class="demo-step-btn" onclick="demoJump('problem',1)">
+            <div class="demo-step-num">2</div>
+            <div><div class="demo-step-title">Describe the Problem</div><div class="demo-step-desc">Type what happened and set Emergency urgency level</div></div>
+          </div>
+          <div class="demo-step-btn" onclick="demoJump('searching',2)">
+            <div class="demo-step-num">3</div>
+            <div><div class="demo-step-title">Request Broadcasts</div><div class="demo-step-desc">Watch as nearby helpers are notified in real time</div></div>
+          </div>
+          <div class="demo-step-btn" onclick="demoJump('bids',3)">
+            <div class="demo-step-num">4</div>
+            <div><div class="demo-step-title">Compare Bids</div><div class="demo-step-desc">3 helpers responded — compare price, ETA, rating</div></div>
+          </div>
+          <div class="demo-step-btn" onclick="demoJump('tracking',4)">
+            <div class="demo-step-num">5</div>
+            <div><div class="demo-step-title">Track & Chat Live</div><div class="demo-step-desc">Real-time map tracking + built-in chat with your helper</div></div>
+          </div>
+          <div class="demo-step-btn" onclick="demoJump('complete',5)">
+            <div class="demo-step-num">6</div>
+            <div><div class="demo-step-title">Completed & Receipt</div><div class="demo-step-desc">Review, receipt, rating — everything in one place</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-badge reveal">💬 Real Stories</div>
+    <h2 class="section-title reveal reveal-delay-1" style="color:#fff">People who got<br>unstuck with SwaDrive.</h2>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text"></p>
+        <div class="testi-author">
+          <div class="testi-av">KS</div>
+          <div><div class="testi-name">Krishna Shrivastav</div><div class="testi-role">Engineering Student · Gorakhpur</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text"></p>
+        <div class="testi-author">
+          <div class="testi-av">LS</div>
+          <div><div class="testi-name">Lavkush Sharma</div><div class="testi-role">Teacher · Gorakhpur</div></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta-final">
+  <div style="position:relative;z-index:1">
+    <h2 class="section-title reveal" style="color:#fff;text-align:center;max-width:600px;margin:0 auto 14px">Fast. Reliable.<br>Affordable.</h2>
+    <p class="section-sub reveal reveal-delay-1" style="color:rgba(255,255,255,0.75);text-align:center;margin:0 auto 40px;max-width:480px">Join  customers who never panic during breakdowns anymore.</p>
+    <div class="cta-buttons reveal reveal-delay-2">
+      <button class="btn-white" onclick="document.getElementById('live-demo').scrollIntoView({behavior:'smooth'})">Try the Demo →</button>
+      <button class="btn-outline-white">📲 Download App</button>
+    </div>
+    <div style="margin-top:48px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap;reveal">
+      <div style="text-align:center;color:rgba(255,255,255,0.8)"><div style="font-family:var(--font-head);font-size:36px;font-weight:800;color:#fff">+</div><div style="font-size:14px;margin-top:4px">Happy Customers</div></div>
+      <div style="text-align:center;color:rgba(255,255,255,0.8)"><div style="font-family:var(--font-head);font-size:36px;font-weight:800;color:#fff">+</div><div style="font-size:14px;margin-top:4px">Verified Helpers</div></div>
+      <div style="text-align:center;color:rgba(255,255,255,0.8)"><div style="font-family:var(--font-head);font-size:36px;font-weight:800;color:#fff">+</div><div style="font-size:14px;margin-top:4px">Cities</div></div>
+      <div style="text-align:center;color:rgba(255,255,255,0.8)"><div style="font-family:var(--font-head);font-size:36px;font-weight:800;color:#fff">⭐</div><div style="font-size:14px;margin-top:4px">Avg App Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo" style="color:#e2e8f0;text-decoration:none;display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-size:20px;font-weight:800">
+          <div class="logo-icon">
+      <img src="https://media.licdn.com/dms/image/v2/D560BAQE_RJfNmGKd1g/company-logo_200_200/B56Z2UZM.pKgAI-/0/1776311131797?e=1779321600&v=beta&t=72Ci5Xa2cluWxJFJ2je7iW08rnkHvVtawF9BzMK6VYs" 
+           alt="SwaDrive Logo" 
+           style="width:40px; height:40px; border-radius:50%;">
+    </div>
+        SwaDrive
+      </div>
+      <p>India's first transparent, bidding-based on-demand platform for vehicle and home appliance emergencies.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="aboutus.html">About Us</a>
+      <a href="career.html">Careers</a>
+      <a href="#">Press</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Vehicle Repair</a>
+      <a href="#">AC & Appliances</a>
+      <a href="#">Towing</a>
+      <a href="#">Scheduled Service</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="https://swadrive.in/">Need Help</a>
+      <a href="https://helpers.swadrive.in/">Become a Helper</a>
+      <a href="contact.html">Partner with Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 SwaDrive </span>
+    <div style="display:flex;gap:20px">
+      <a href="privacy.html" style="color:#64748b;text-decoration:none;font-size:13px">Privacy Policy</a>
+      <a href="Term_of_Service.html" style="color:#64748b;text-decoration:none;font-size:13px">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== HERO PHONE SCREENS =====
+let currentScreen = 'home';
+function showScreen(name) {
+  document.querySelectorAll('#hero .app-screen').forEach(s => s.classList.add('hidden'));
+  const target = document.getElementById('screen-'+name);
+  if(target){ target.classList.remove('hidden'); currentScreen = name; }
+}
+function startDemo(type) { showScreen('problem'); }
+function selectUrgency(el,type) {
+  document.querySelectorAll('.urgency-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function postRequest() {
+  showScreen('searching');
+  let count = 0, progress = 0;
+  const statuses = ['Scanning 5km radius…','Found 2 helpers…','Waiting for bids…','3 bids received!'];
+  let si = 0;
+  const interval = setInterval(()=>{
+    count = Math.min(count + 1, 3);
+    progress = Math.min(progress + 12, 100);
+    const countEl = document.getElementById('helper-found-count');
+    const progEl = document.getElementById('search-progress');
+    const statEl = document.getElementById('search-status');
+    if(countEl) countEl.textContent = count;
+    if(progEl) progEl.style.width = progress + '%';
+    if(statEl && si < statuses.length) { statEl.textContent = statuses[si]; si++; }
+    if(progress >= 100){ clearInterval(interval); setTimeout(()=>showScreen('bids'),600); }
+  },500);
+}
+function selectBid(n) {
+  [1,2,3].forEach(i=>{
+    const c = document.getElementById('bid'+i);
+    if(c){ c.style.borderColor = i===n ? 'var(--blue)' : (i===2 ? 'var(--green)' : 'var(--bg3)'); }
+  });
+  const btn = document.querySelector('#screen-bids .btn-accept');
+  const names = {1:'Raju – ₹250',2:'Mohan – ₹200',3:'Ajay – ₹300'};
+  if(btn) btn.textContent = '✓ Accept ' + names[n];
+  if(n) setTimeout(()=>showScreen('tracking'), 800);
+}
+let etaTimer;
+function startEtaCountdown() {
+  let eta = 28;
+  clearInterval(etaTimer);
+  etaTimer = setInterval(()=>{
+    eta = Math.max(0,eta-1);
+    const el = document.getElementById('live-eta');
+    const etaEl = document.getElementById('tracking-eta');
+    if(el) el.textContent = eta > 0 ? '~'+eta+' min remaining' : 'Arrived!';
+    if(etaEl) etaEl.textContent = 'ETA: ~'+eta+' minutes · ₹200';
+    if(eta===0) clearInterval(etaTimer);
+  }, 2000);
+}
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const area = document.getElementById('chat-area');
+  if(!input||!area||!input.value.trim()) return;
+  const msg = document.createElement('div');
+  msg.className = 'chat-msg out';
+  msg.textContent = input.value;
+  area.appendChild(msg);
+  area.scrollTop = area.scrollHeight;
+  input.value = '';
+  setTimeout(()=>{
+    const reply = document.createElement('div');
+    reply.className = 'chat-msg in';
+    reply.textContent = 'Got it! See you soon 🔧';
+    area.appendChild(reply);
+    area.scrollTop = area.scrollHeight;
+  }, 1200);
+}
+function completeService() { clearInterval(etaTimer); showScreen('complete'); }
+function rateStar(n) {
+  const stars = document.querySelectorAll('#star-rating .star');
+  stars.forEach((s,i)=>{ s.style.opacity = i<n ? '1':'0.3'; s.style.transform = i<n ? 'scale(1.1)':'scale(1)'; });
+  setTimeout(()=>{ alert('Thanks for rating! Your feedback helps the SwaDrive community.'); },300);
+}
+// Auto advance hero phone
+let heroAuto;
+function startHeroAuto() {
+  heroAuto = setTimeout(()=>{
+    if(currentScreen==='home'){ postRequest(); }
+  }, 3000);
+}
+startHeroAuto();
+
+// ===== BIDDING SHOWCASE =====
+let selectedBid = 2;
+function showcaseBid(el,n) {
+  selectedBid = n;
+  document.querySelectorAll('.bid-showcase-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const names = {1:"Raju's Bid – ₹250",2:"Mohan's Bid – ₹200",3:"Ajay's Bid – ₹300"};
+  document.getElementById('accept-btn-text').textContent = '✓ Accept ' + names[n];
+}
+function doBidAccept() {
+  const btn = document.getElementById('accept-btn');
+  btn.style.background = 'linear-gradient(135deg,var(--green),var(--green-dark))';
+  btn.innerHTML = '✓ Confirmed! Tracking helper…';
+  setTimeout(()=>{ btn.innerHTML = '✓ Accept Mohan\'s Bid – ₹200'; btn.style.background = ''; }, 2000);
+}
+
+// ===== DEMO SECTION =====
+const demoScreens = ['home','problem','searching','bids','tracking','complete'];
+let demoStep = 0;
+let demoTypingTimer;
+function demoGo(screen) {
+  document.querySelectorAll('#live-demo .app-screen').forEach(s=>s.classList.add('hidden'));
+  const t = document.getElementById('dscreen-'+screen);
+  if(t) t.classList.remove('hidden');
+  const idx = demoScreens.indexOf(screen);
+  document.querySelectorAll('.demo-step-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  if(screen==='problem') startDemoTyping();
+  if(screen==='searching') runDemoSearch();
+}
+function demoJump(screen,idx) {
+  demoStep = idx;
+  demoGo(screen);
+}
+function startDemoTyping() {
+  const el = document.getElementById('demo-typing');
+  if(!el) return;
+  const text = 'Tyre puncture – front right wheel';
+  let i = 0; el.textContent = '';
+  clearInterval(demoTypingTimer);
+  demoTypingTimer = setInterval(()=>{
+    el.textContent = text.substring(0,i) + '|';
+    i++;
+    if(i>text.length){ clearInterval(demoTypingTimer); el.textContent = text; }
+  }, 80);
+}
+function runDemoSearch() {
+  let c = 0, p = 0;
+  const ci = document.getElementById('demo-count');
+  const pi = document.getElementById('demo-progress');
+  const interval = setInterval(()=>{
+    c = Math.min(c+1,3); p = Math.min(p+15,100);
+    if(ci) ci.textContent = c;
+    if(pi) pi.style.width = p + '%';
+    if(p>=100){ clearInterval(interval); setTimeout(()=>demoGo('bids'),600); }
+  }, 500);
+}
+function demoSelectBid(n) {
+  [1,2,3].forEach(i=>{
+    const el = document.getElementById('dbid'+i);
+    if(!el) return;
+    if(i===n){ el.style.borderColor='var(--blue)'; el.style.background='#EFF6FF'; }
+    else if(i===2){ el.style.borderColor='var(--green)'; el.style.background='var(--green-light)'; }
+    else{ el.style.borderColor='var(--bg3)'; el.style.background='#fff'; }
+  });
+  const names = {1:'Raju – ₹250',2:'Mohan – ₹200',3:'Ajay – ₹300'};
+  const btn = document.getElementById('demo-accept-btn');
+  if(btn) btn.textContent = '✓ Accept '+names[n];
+  setTimeout(()=>demoGo('tracking'),600);
+}
+
+// ===== COUNTERS =====
+function animateCounter(el, target, suffix, duration) {
+  let start = 0; const step = target / (duration/16);
+  const timer = setInterval(()=>{
+    start = Math.min(start+step, target);
+    el.textContent = Math.floor(start).toLocaleString('en-IN') + suffix;
+    if(start>=target) clearInterval(timer);
+  }, 16);
+}
+const statsObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCounter(document.getElementById('s1'), 0, ' +', 2000);
+      animateCounter(document.getElementById('s2'), 15, ' min', 1500);
+      animateCounter(document.getElementById('s3'), 0, '+', 1800);
+      statsObserver.disconnect();
+    }
+  });
+},{threshold:0.5});
+const heroStats = document.querySelector('.hero-stats');
+if(heroStats) statsObserver.observe(heroStats);
+
+// ===== SCROLL REVEAL =====
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+// ===== ETA starts when tracking screen appears =====
+const trackObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting && currentScreen==='tracking') startEtaCountdown(); });
+},{threshold:0.5});
+const trackScreen = document.getElementById('screen-tracking');
+if(trackScreen) trackObserver.observe(trackScreen);
+</script>
+</body>
+</html>
