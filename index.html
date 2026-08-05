@@ -497,6 +497,47 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
   /* PHONE MOCKUP inside hero (hidden on mobile) */
   .phone-frame{transform:none !important}
 }
+
+
+
+
+  /* VIDEO POPUP */
+
+.video-modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.8);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+}
+
+.video-box{
+    width:90%;
+    max-width:900px;
+    position:relative;
+}
+
+.video-box video{
+    width:100%;
+    border-radius:15px;
+}
+
+.close-video{
+    position:absolute;
+    top:-40px;
+    right:0;
+    color:#fff;
+    font-size:40px;
+    cursor:pointer;
+}
+
+
+  
  
 /* =============================================
    RESPONSIVE — SMALL MOBILE (max 380px)
@@ -584,9 +625,43 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
       <h1 class="hero-title">Stuck in an<br><span>Emergency?</span><br>Help is just min<br>away.</h1>
       <p class="hero-sub"><b><b>SwaDrive</b></b> connects you with verified mechanics & technicians via a transparent bidding system. No fixed rates. No guessing. Real-time quotes in minutes.</p>
       <div class="hero-btns">
-        <button class="btn-primary" onclick="document.getElementById('live-demo').scrollIntoView({behavior:'smooth'})">
-          ▶ Watch How It Works
-        </button>
+      <button class="btn-primary" onclick="openVideo()">
+    ▶ Watch How It Works
+</button>
+
+
+        <!-- Video Popup -->
+<div id="videoModal" class="video-modal">
+    <div class="video-box">
+
+        <span class="close-video" onclick="closeVideo()">&times;</span>
+
+        <video id="demoVideo" controls>
+            <source src="demo.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
+
+    </div>
+</div>
+
+        <script>function openVideo(){
+
+    document.getElementById("videoModal").style.display="flex";
+
+    document.getElementById("demoVideo").play();
+
+}
+
+function closeVideo(){
+
+    let video=document.getElementById("demoVideo");
+
+    video.pause();
+    video.currentTime=0;
+
+    document.getElementById("videoModal").style.display="none";
+
+}</script>
         <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
           Explore Features →
         </button>
