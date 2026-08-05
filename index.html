@@ -587,6 +587,44 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
   .hero-title br{display:none}
   .hero-badge span:last-child{display:none}
 }
+
+
+
+
+  .video-modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.8);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.video-box{
+    width:90%;
+    max-width:900px;
+    position:relative;
+}
+
+.video-box iframe{
+    width:100%;
+    height:500px;
+    border:none;
+    border-radius:15px;
+}
+
+.close-video{
+    position:absolute;
+    top:-40px;
+    right:0;
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -628,55 +666,7 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
       <button class="btn-primary" onclick="openVideo()">
     ▶ Watch How It Works
 </button>
-
-      <!-- Video Popup -->
-<div id="videoModal" class="video-modal">
-    <div class="video-box">
-
-        <span class="close-video" onclick="closeVideo()">&times;</span>
-
-        <video id="demoVideo" controls>
-            <source src="https://drive.google.com/file/d/1pryGIZhX0B8jbVNEdNW1b6UyiTvmlqW4/preview" type="video/mp4">
-            Your browser does not support video.
-        </video>
-
-
-
-
-
-  <script>function openVideo(){
-
-    document.getElementById("videoModal").style.display="flex";
-
-    document.getElementById("demoVideo").play();
-
-}
-
-function closeVideo(){
-
-    let video=document.getElementById("demoVideo");
-
-    video.pause();
-    video.currentTime=0;
-
-
-
-    document.getElementById("videoModal").style.display="none";
-
-}</script>
-
-
-        
-        <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
-          Explore Features →
-        </button>
-      </div>
-
-
-
-
-        
-<div id="videoModal" class="video-modal">
+      <div id="videoModal" class="video-modal">
     <div class="video-box">
 
         <span class="close-video" onclick="closeVideo()">&times;</span>
@@ -693,18 +683,28 @@ function closeVideo(){
     </div>
 </div>
 
-        
         <script>function openVideo() {
     document.getElementById("videoModal").style.display = "flex";
 }
 
 function closeVideo() {
-    document.getElementById("videoModal").style.display = "none";
+    const modal = document.getElementById("videoModal");
+    const iframe = document.getElementById("driveVideo");
+
+    modal.style.display = "none";
 
     // Video stop karne ke liye iframe reload
-    const frame = document.getElementById("driveVideo");
-    frame.src = frame.src;
-}}</script>
+    iframe.src = iframe.src;
+}
+        </script>
+        
+        <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">
+          Explore Features →
+        </button>
+      </div>
+
+
+
 
     
       <div class="hero-stats">
