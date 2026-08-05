@@ -629,8 +629,41 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
     ▶ Watch How It Works
 </button>
 
+      <!-- Video Popup -->
+<div id="videoModal" class="video-modal">
+    <div class="video-box">
+
+        <span class="close-video" onclick="closeVideo()">&times;</span>
+
+        <video id="demoVideo" controls>
+            <source src="https://drive.google.com/file/d/1pryGIZhX0B8jbVNEdNW1b6UyiTvmlqW4/preview" type="video/mp4">
+            Your browser does not support video.
+        </video>
 
 
+
+
+
+  <script>function openVideo(){
+
+    document.getElementById("videoModal").style.display="flex";
+
+    document.getElementById("demoVideo").play();
+
+}
+
+function closeVideo(){
+
+    let video=document.getElementById("demoVideo");
+
+    video.pause();
+    video.currentTime=0;
+
+
+
+    document.getElementById("videoModal").style.display="none";
+
+}</script>
 
 
         
