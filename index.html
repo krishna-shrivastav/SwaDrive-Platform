@@ -625,6 +625,27 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
     font-size:40px;
     cursor:pointer;
 }
+
+
+  .close-video{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:40px;
+    height:40px;
+    background:red;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    cursor:pointer;
+    z-index:10000;
+}
+  .video-box{
+    position:relative;
+}
 </style>
 </head>
 <body>
@@ -669,7 +690,7 @@ footer{background:#0a0f1e;padding:60px 5vw 30px;color:#64748b;font-size:14px}
       <div id="videoModal" class="video-modal">
     <div class="video-box">
 
-        <span class="close-video" onclick="closeVideo()">&times;</span>
+       <button class="close-video" onclick="closeVideo()">✕</button>
 
         <iframe
             id="driveVideo"
@@ -695,6 +716,13 @@ function closeVideo() {
 
     // Video stop karne ke liye iframe reload
     iframe.src = iframe.src;
+}
+          const modal = document.getElementById("videoModal");
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeVideo();
+    }
 }
         </script>
         
